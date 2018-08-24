@@ -1,0 +1,1 @@
+export default "/assets/head-img/default.png"

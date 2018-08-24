@@ -1,0 +1,1 @@
+{"version":3,"file":"community.js","sourceRoot":"","sources":["../../src/dao/community.ts"],"names":[],"mappings":";;;;;;;;;;AACA,8BAAuB;AAGvB,SAAsB,cAAc,CAAC,GAAe;;QACnD,MAAM,GAAG,GAAG,YAAE,CAAC,WAAW,CAAC;QAC3B,OAAO,MAAM,GAAG,CAAC,IAAI,CAAC,EAAE,GAAG,EAAE,EAAE,GAAG,EAAE,GAAG,EAAE,EAAE,CAAC,CAAC,OAAO,EAAE,CAAC;IACxD,CAAC;CAAA;AAHD,wCAGC"}
