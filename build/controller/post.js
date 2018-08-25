@@ -96,7 +96,7 @@ exports.getAllPostByNew = (request, response) => __awaiter(this, void 0, void 0,
         if (justId) {
             resp.posts = (yield col
                 .aggregate([
-                { $project: { comments: 0 } },
+                { $project: { _id: 1, createAt: 1 } },
                 { $match: { createAt: { $lt: lastCreateAt } } },
                 { $sort: { createAt: -1 } },
                 { $limit: count },
@@ -147,6 +147,9 @@ exports.getAllPostByNew = (request, response) => __awaiter(this, void 0, void 0,
         resp.msg = 'inner server error';
     }
     response.json(resp);
+});
+exports.getPostByPopular = (request, response) => __awaiter(this, void 0, void 0, function* () {
+    const req = request.body;
 });
 const timeLimit = 1000 * 60 * 60 * 24 * 7; // one week
 exports.feelPost = (request, response) => __awaiter(this, void 0, void 0, function* () {
