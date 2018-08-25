@@ -50,8 +50,38 @@ export interface GetCommunitySubscriberCountResp extends Resp {
 		Resp 
 */
 export interface SubscribeCommunityReq{
-	id:string; 
+	id: string; 
 } 
+
+/*
+	POST /community/unsubscribe 
+	req:
+		UnsubscribeCommunityReq
+	resp:
+		Resp 
+*/
+export interface UnsubscribeCommunityReq{
+	id: string; 
+} 
+
+/*
+	POST /community/trending
+	req:
+	resp:
+		GetTrendingCommunities
+*/
+
+export interface GetTrendingCommunitiesResp extends Resp  {
+	ids: string[]; 
+}
+
+
+
+
+
+
+
+
 
 
 

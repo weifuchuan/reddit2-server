@@ -69,13 +69,32 @@ export interface GetPostByIdsResp extends Resp {
     GetAllPostByNewResp
 */
 export interface GetAllPostByNewReq {
-	lastCreateAt?: number;
-	count?: number;
+  lastCreateAt?: number;
+  count?: number;
   justId?: boolean;
   getterId?: string;
 }
 
 export interface GetAllPostByNewResp extends Resp {
+	posts: string[] | Post[];
+	getterLikePosts?: string[];
+	getterNayPosts?: string[];
+}
+
+/*
+  POST /post/get/popular
+  req:
+    GetAllPostByNewReq
+  resp:
+    GetAllPostByNewResp
+*/
+export interface GetPostByPopularReq {
+  lastPostId?: number;
+  count?: number;
+  getterId?: string;
+}
+
+export interface GetPostByPopularResp extends Resp {
 	posts: string[] | Post[];
 	getterLikePosts?: string[];
 	getterNayPosts?: string[];

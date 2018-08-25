@@ -43,7 +43,7 @@ exports.getCommunitySubscriberCount = (request, response) => __awaiter(this, voi
             },
             {
                 $group: {
-                    _id: 'communityId',
+                    _id: '$communityId',
                     count: { $sum: 1 }
                 }
             }
@@ -81,5 +81,48 @@ exports.subscribeCommunity = (request, response) => __awaiter(this, void 0, void
         logger_1.default.error(error);
         response.json({ code: index_1.code.error, msg: 'error' });
     }
+});
+exports.unsubscribeCommunity = (request, response) => __awaiter(this, void 0, void 0, function* () {
+    const req = request.body;
+    const me = request.body._self_state_user;
+    try {
+        const col = db_1.default.interlopers;
+        yield col.deleteMany({ communityId: new bson_1.ObjectID(req.id), userId: me._id });
+        response.json({ code: index_1.code.success });
+    }
+    catch (error) {
+        logger_1.default.error(error);
+        response.json({ code: index_1.code.error, msg: 'error' });
+    }
+});
+const trendingCommunitiesKey = 'trendingCommunities';
+exports.getTrendingCommunities = (request, response) => __awaiter(this, void 0, void 0, function* () {
+    const resp = { code: index_1.code.success, ids: [] };
+    try {
+        const redis = db_1.default.redisdb;
+        const interlopers = db_1.default.interlopers;
+        if ((yield redis.exists(trendingCommunitiesKey)) === 0) {
+            const result = yield interlopers
+                .aggregate([
+                {
+                    $group: {
+                        _id: '$communityId',
+                        count: { $sum: 1 }
+                    }
+                }
+            ])
+                .toArray();
+            yield Promise.all(result.map(({ _id, count }) => (() => __awaiter(this, void 0, void 0, function* () {
+                yield redis.zadd(trendingCommunitiesKey, (count * -100), _id.toHexString());
+            }))()));
+        }
+        resp.ids = yield redis.zrange(trendingCommunitiesKey, 0, 9);
+    }
+    catch (error) {
+        logger_1.default.error(error);
+        resp.code = index_1.code.error;
+        resp.msg = 'error';
+    }
+    response.json(resp);
 });
 //# sourceMappingURL=community.js.map

@@ -12,7 +12,13 @@ import {
 } from './user';
 import { createPost, getPostByIds, getAllPostByNew, feelPost, commentPost, deletePost } from './post';
 import { uploadMedia } from './file';
-import { getCommunitiesInfo, getCommunitySubscriberCount, subscribeCommunity } from './community';
+import {
+	getCommunitiesInfo,
+	getCommunitySubscriberCount,
+	subscribeCommunity,
+	getTrendingCommunities,
+	unsubscribeCommunity
+} from './community';
 const fileUpload = require('express-fileupload');
 
 export default function setRouter(router: IRouter) {
@@ -87,6 +93,10 @@ export default function setRouter(router: IRouter) {
 		{
 			path: '/subscriber/count',
 			handler: getCommunitySubscriberCount
+		},
+		{
+			path: '/trending',
+			handler: getTrendingCommunities
 		}
 	]);
 
@@ -96,6 +106,10 @@ export default function setRouter(router: IRouter) {
 			{
 				path: '/subscribe',
 				handler: subscribeCommunity
+			},
+			{
+				path: '/unsubscribe',
+				handler: unsubscribeCommunity
 			}
 		],
 		authMiddleware

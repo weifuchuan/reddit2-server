@@ -70,12 +70,20 @@ function setRouter(router) {
         {
             path: '/subscriber/count',
             handler: community_1.getCommunitySubscriberCount
+        },
+        {
+            path: '/trending',
+            handler: community_1.getTrendingCommunities
         }
     ]);
     routeGroup('/community', [
         {
             path: '/subscribe',
             handler: community_1.subscribeCommunity
+        },
+        {
+            path: '/unsubscribe',
+            handler: community_1.unsubscribeCommunity
         }
     ], user_1.authMiddleware);
     routeGroup('/post/get', [

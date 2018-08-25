@@ -17,7 +17,7 @@ import * as dao from '../dao/post';
 import logger from '../logger';
 import { GetAllPostByNewReq, GetAllPostByNewResp } from '../common/api/index';
 import db from '../db';
-import { CommentPostReq, DeletePostReq } from '../common/api/post';
+import { CommentPostReq, DeletePostReq, GetPostByPopularReq } from '../common/api/post';
 import { request } from 'https';
 import { GetCommunitySubscriberCountReq } from '../common/api/community';
 
@@ -103,7 +103,7 @@ export const getAllPostByNew: RequestHandler = async (request, response) => {
 		if (justId) {
 			resp.posts = (await col
 				.aggregate([
-					{ $project: { comments: 0 } },
+					{ $project: { _id: 1, createAt: 1 } },
 					{ $match: { createAt: { $lt: lastCreateAt } } },
 					{ $sort: { createAt: -1 } },
 					{ $limit: count },
@@ -158,6 +158,11 @@ export const getAllPostByNew: RequestHandler = async (request, response) => {
 	}
 	response.json(resp);
 };
+
+export const getPostByPopular:RequestHandler=async (request, response)=>{
+	const req:GetPostByPopularReq=request.body; 
+	
+}
 
 const timeLimit = 1000 * 60 * 60 * 24 * 7; // one week
 
