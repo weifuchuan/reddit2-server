@@ -22,7 +22,6 @@ app.all('*', (req, resp, next) => {
 
 app.use(express.static('webapp'));
 
-
 app.use((req, res, next) => {
 	logger.info(req.headers);
 	if (req.method.toLowerCase() === 'post') {
